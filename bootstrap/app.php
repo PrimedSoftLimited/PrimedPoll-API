@@ -79,6 +79,7 @@ $app->singleton(
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->configure('mail');
+$app->register(Propaganistas\LaravelPhone\PhoneServiceProvider::class);
 $app->alias('mailer', Illuminate\Mail\Mailer::class);
 $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
 $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);

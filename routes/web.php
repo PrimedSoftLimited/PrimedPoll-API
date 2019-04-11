@@ -18,3 +18,5 @@ $router->get('/', function () use ($router) {
 $router->post('/api/register', 'SignupController@register');
 
 $router->get('register/verify/{verifyToken}', 'VerifyMailController@verify');
+
+$router->put('api/update/{id}', 'UpdateController@update');
