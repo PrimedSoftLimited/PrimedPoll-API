@@ -12,7 +12,11 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return ["message" => "All API routes are on {server}/api"];
+});
+
+$router->get('/api', function () use ($router) {
+    return ["message" => "Welcome to PrimePoll API"];
 });
 
 //****************Users Routes**************** */
