@@ -44,7 +44,7 @@ class SignupController extends Controller
 			}catch(\Exception $e) {
 
 
-				$msg['error'] = "Account Not created, Try Again!";
+				$msg['error'] = "Account Not created, Try Again!". $e;
 				return response()->json($msg, 422);
 
 				//else rollback all changes
