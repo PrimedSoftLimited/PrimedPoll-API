@@ -41,12 +41,12 @@ class SignupController extends Controller
 
 			}catch(\Exception $e) {
 
+				//if any operation fails, Thanos snaps finger - user was not created
+				DB::rollBack();
 
 				$msg['error'] = "Account Not created, Try Again!";
 				return response()->json($msg, 422);
-
-				//else rollback all changes
-				DB::rollBack();
+				
 
 			}
 
