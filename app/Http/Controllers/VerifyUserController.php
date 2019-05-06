@@ -38,12 +38,17 @@ class VerifyUserController extends Controller
                 $token = Auth::guard('api')->login($user);
 
                 $msg["message"] =  "Account is verified";
+
+                $msg['verified'] = true;
+
                 $msg['token'] = $token;
 
                 return response()->json($msg, 200);
              }
 
              $msg["message"] =  "Account is is already verified.";
+             $msg['verified'] = true;
+
 
              return response()->json($msg, 200);
 
