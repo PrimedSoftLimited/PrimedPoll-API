@@ -53,7 +53,8 @@ class VerifyUserController extends Controller
              return response()->json($msg, 200);
 
         } else{
-            $msg["message"] = "Account does not exist";
+
+            $msg["message"] = "Account with code does not exist!";
 
             return response()->json($msg, 409);
 
