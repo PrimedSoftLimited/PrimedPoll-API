@@ -32,7 +32,6 @@ class VerifyUserController extends Controller
                 $user->email_verified_at = date("Y-m-d H:i:s");
                 $user->save();
                 
-                $msg['New Token'] = $token;
                 $msg = "Account is verified. You can now login.";
             } else {
                 $msg = "Account verified already.";
