@@ -32,13 +32,13 @@ class SignupController extends Controller
 					'verifycode' => $verifycode
 				]);
 
-				$token = Auth::guard('api')->login($user);
 
 				Mail::to($user->email)->send(new VerifyEmail($user));
 
+				$token = Auth::guard('api')->login($user);
+
 				$msg['message'] = "Thanks for signing up! A Verification Mail has been Sent to $user->email";
 				
-
 				$msg['token'] = $token;
 
 				//if operation was successful save changes to database
