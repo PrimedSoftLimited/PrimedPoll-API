@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Routing\Controller as BaseController;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SignupController extends Controller
 {
@@ -30,10 +32,15 @@ class SignupController extends Controller
 					'verifycode' => $verifycode
 				]);
 
+
 				Mail::to($user->email)->send(new VerifyEmail($user));
 
-				$msg['success'] = "Thanks for signing up! A Verification Mail has been Sent to $user->email";
+
+				$msg['message'] = "Thanks for signing up! A Verification Mail has been Sent to $user->email";
+
+				$msg['verified'] = false;
 				
+
 				//if operation was successful save changes to database
 				DB::commit();
 

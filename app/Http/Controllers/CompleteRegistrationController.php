@@ -21,8 +21,8 @@ class CompleteRegistrationController extends Controller
 
     public function update(User $user, Userinterest $userinterest, Request $request)
     {
-        $user = Auth::user();
-       
+        $user = Auth::guard('api')->user();
+
         $this->validateRequest($request);
 
         $user->first_name = $request->input('first_name');
