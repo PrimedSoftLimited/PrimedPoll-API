@@ -12,26 +12,33 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return ["message" => "All API routes are on {server}/api"];
+});
+
+$router->get('/api', function () use ($router) {
+    return ["message" => "Welcome to PrimePoll API"];
 });
 
 //****************Users Routes**************** */
+
 $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
 
 $router->post('api/user/login', 'SignInController@userLogin');
 
+// This controller completes user registration
+$router->put('api/complete', 'CompleteRegistrationController@update');
 
-
-$router->put('api/update', 'UpdateController@update');
 //Tino
-$router->post('password/reset', 'PasswordController@resetpassword');
-$router->put('password/change', 'ChangePasswordController@updatepassword');
+$router->post('api/password/reset', 'PasswordController@resetpassword');
+
+$router->put('api/password/change', 'ChangePasswordController@updatepassword');
+
 //****************End Routes****************** */
 
 //****************Admin Custom Routes**************** */
 $router->post('api/admin/access/login', 'SignInController@adminLogin');
-$router->get('api/user/show/all/intrest', 'ShowIntrestController@index');
+$router->get('api/user/show/all/interest', 'ShowIntrestController@index');
 //****************End Routes****************** */
 
 
@@ -56,5 +63,13 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //Iro
       $router->put('/edit', 'EditProfileController@editprofile');
     $router->post('/upload', 'EditProfileController@uploadImage');
+  
+  //Tino
+   $router->post('/polls/create', 'PollController@createpoll');
+
+
+
+    //francise 
+    $router->get('/profile', 'ProfileController@profile');
 
 });
