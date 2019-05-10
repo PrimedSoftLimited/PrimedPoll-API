@@ -54,6 +54,8 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     $router->get('admin/show/all/intrest', 'CreateIntrestController@index');
     $router->put('admin/edit/intrest/{intrest_id}', 'CreateIntrestController@update');
     $router->delete('admin/delete/intrest/{intrest_id}', 'CreateIntrestController@destroy');
+    $router->get('admin/users', 'AdminController@users');
+    $router->get('admin/polls', 'AdminController@polls');
     //************************************** */
     
     //Iro
