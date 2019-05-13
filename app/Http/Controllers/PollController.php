@@ -21,11 +21,40 @@ class PollController extends Controller
      * @return void
      */
 
+    public function index(Poll $poll)
+    {
+        $user = Auth::guard('api')->user();
+
+        $poll = Poll::where('user_id', $user->id)->get();
+
+        return response()->json(['data' => ['success' => true, 'User Polls' => $poll]], 201);
+    }
+
+    public function show($id)
+    {
+        $user = Auth::guard('api')->user();
+        $poll = Poll::findOrFail($id);
+        try{
+
+            if($user->id == $poll->user_id){
+
+            return response()->json(['data' => ['success' => true, 'Poll' => $poll, 'message' => 'User Poll']], 201);
+
+            }
+
+        }   catch(Exception $e){
+
+            return response()->json(['data' => ['success' => false, 'message: '.$e->getMessage('Poll does not exist!!')]], 401);
+
+        }
+    }
+
+
     public function createpoll(Request $request)
     {
         $this->validate($request, [
             'pollname' => 'required|min:4',
-            'interest' => 'required',
+            'interest_id' => 'required',
             'expirydate' => 'required',
             'options' => 'required',
         ]);
@@ -37,7 +66,7 @@ class PollController extends Controller
         if ($AuthenticatedUser) {
             $poll->user_id = $AuthenticatedUser->id;
             $poll->name = $request->input('pollname');
-            $poll->interest_id = $request->input('interest');
+            $poll->interest_id = $request->input('interest_id');
             $poll->expirydate = $request->input('expirydate');
             $poll->save();
 
@@ -75,4 +104,14 @@ class PollController extends Controller
             return response()->json(['data' => ['success' => false, 'message' => 'Unauthorized access']], 401);
         }
     }
+
+    public function delete($id)
+    {
+        $poll = Poll::findOrFail($id);
+
+        $poll->delete();
+        
+        return response()->json(['data' => ['success' => true, 'message' => 'User Poll Deleted Successfully!!']], 201);
+    }
+
 }

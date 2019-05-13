@@ -61,15 +61,21 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //************************************** */
     
     //Iro
-      $router->put('/edit', 'EditProfileController@editprofile');
+    $router->put('/edit', 'EditProfileController@editprofile');
     $router->post('/upload', 'EditProfileController@uploadImage');
   
   //Tino
    $router->post('/polls/create', 'PollController@createpoll');
 
+  //francis
+  $router->get('/profile', 'ProfileController@profile');
 
+  // Poll Routes responsible for showing all polls, show one poll and deleting a poll
+  $router->get('/polls', 'PollController@index');
 
-    //francise 
-    $router->get('/profile', 'ProfileController@profile');
+  $router->get('/polls/{poll_id}', 'PollController@show');
+  
+  $router->delete('/polls/{poll_id}', 'PollController@delete');
+
 
 });
