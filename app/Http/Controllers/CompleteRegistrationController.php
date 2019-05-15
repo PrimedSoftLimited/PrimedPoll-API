@@ -19,7 +19,7 @@ class CompleteRegistrationController extends Controller
      * @return void
      */
 
-    public function update(User $user, Userinterest $userinterest, Request $request)
+    public function update(User $user, Request $request)
     {
         $user = Auth::guard('api')->user();
 
@@ -36,26 +36,25 @@ class CompleteRegistrationController extends Controller
         $interests = $request->input('interests');
 
         foreach ($interests as $interest) {
-
+          $userinterest = new Userinterest();
           $userinterest->owner_id = $user->id;
           $userinterest->interest_id = $interest;
           $userinterest->save();
-
         }
-        $user->save();      
-		$res['message'] = "{$user->first_name} Updated Successfully!";        
-        return response()->json($res, 200); 
+
+         $user->save();      
+         return response()->json(['data' =>['success' => true, 'user' => $user, 'message' => 'Registration Completed']], 200);
     }
 
     public function validateRequest($request)
     {
 
        $rules = [
-        'first_name' => 'users,first_name,string|required',
-        'last_name' => 'unique:users,last_name,string|required',
-        'phone' => 'users,phone,required|phone:NG,US,mobile',
-        'dob' => 'date',
-        'interest' => 'array|required',
+        'first_name' => 'string|required',
+        'last_name' => 'string|required',
+        'phone' => 'phone:NG,US,mobile|required',
+        'dob' => 'date|required',
+        'interests' => 'array|required',
         ];
 
         $messages = [
