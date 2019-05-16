@@ -18,7 +18,7 @@ class CreatePollsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('interest_id');
-            $table->date('expirydate');
+            $table->dateTime('expirydate');
             $table->timestamps();
         });
     }

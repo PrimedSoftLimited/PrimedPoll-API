@@ -56,10 +56,10 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     $router->delete('admin/delete/intrest/{intrest_id}', 'CreateIntrestController@destroy');
     $router->get('admin/users', 'AdminController@users');
     $router->get('admin/polls', 'AdminController@polls');
+    $router->get('admin/trending', 'AdminController@trending');
     //************************************** */
     
-    //Iro
-      $router->put('/edit', 'EditProfileController@editprofile');
+    $router->put('/edit', 'EditProfileController@editprofile');
     $router->post('/upload', 'EditProfileController@uploadImage');
   
   //Tino
