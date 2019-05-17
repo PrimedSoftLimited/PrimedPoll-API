@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Userinterest;
+use App\Userinterests;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +19,10 @@ class CompleteRegistrationController extends Controller
      * @return void
      */
 
+    public function update(User $user, Userinterests $userinterests, Request $request)
+    {
+        $user = Auth::user();
+       
     public function update(User $user, Request $request)
     {
         $user = Auth::guard('api')->user();
@@ -36,6 +40,15 @@ class CompleteRegistrationController extends Controller
         $interests = $request->input('interests');
 
         foreach ($interests as $interest) {
+
+          $userinterests->owner_id = $user->id;
+          $userinterests->interest_id = $interest;
+          $userinterests->save();
+
+        }
+        $user->save();      
+		$res['message'] = "{$user->first_name} Updated Successfully!";        
+        return response()->json($res, 200); 
           $userinterest = new Userinterest();
           $userinterest->owner_id = $user->id;
           $userinterest->interest_id = $interest;
