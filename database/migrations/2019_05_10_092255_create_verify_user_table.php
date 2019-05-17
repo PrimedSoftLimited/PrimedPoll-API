@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePollsTable extends Migration
+class CreateVerifyUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePollsTable extends Migration
      */
     public function up()
     {
-        Schema::create('polls', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('interest_id');
-            $table->dateTime('expirydate');
+        Schema::create('verify_user', function (Blueprint $table) {
+            $table->integer('id');
+            $table->integer('user_id');
+            $table->string('token');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePollsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('polls');
+        Schema::dropIfExists('verify_user');
     }
 }
