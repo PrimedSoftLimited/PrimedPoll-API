@@ -3,6 +3,7 @@
 use App\User;
 use App\Poll;
 use App\Intrest;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -46,30 +47,45 @@ class DatabaseSeeder extends Seeder
         $userID= DB::table('users')->pluck('id');
         foreach (range(1,20) as $index) {
             \App\Poll::create([
-            'user_id' => $faker->randomElement($userID),
+            'owner_id' => $faker->randomElement($userID),
             'interest_id' => $faker->randomElement($interestID),
             'name' => $faker->sentence,
-            'expirydate' => $faker->dateTimeBetween($created_at = 'now', $expirydate = '+30 days'),
+            'startdate' => Carbon::now(),
+            'expirydate' => $faker->dateTimeBetween($startdate = 'now', $expirydate = '+30 days'),
             ]);
         } 
 
         $faker = Faker::create();
+        $ownerID = DB::table('users')->pluck('id');
         $pollID = DB::table('polls')->pluck('id');
         $options = ['true', 'false', 'others'];
         foreach (range(1,60) as $index) {
             \App\Option::create([
             'poll_id' => $faker->randomElement($pollID),
             'name' => $faker->randomElement($options),
+            'owner_id' => $faker->randomElement($ownerID),
             ]);
         } 
 
         $faker = Faker::create();
         $ownerID = DB::table('users')->pluck('id');
         $interestID = DB::table('intrests')->pluck('id');
-        foreach (range(1,25) as $index) {
-            \App\Userinterests::create([
+        foreach (range(1,10) as $index) {
+            \App\Userinterest::create([
             'owner_id' => $faker->randomElement($ownerID),
             'interest_id' => $faker->randomElement($interestID),
+            ]);
+        } 
+
+        $faker = Faker::create();
+        $ownerID = DB::table('users')->pluck('id');
+        $pollID = DB::table('polls')->pluck('id');
+        $optionID = DB::table('intrests')->pluck('id');
+        foreach (range(1,10) as $index) {
+            \App\Votes::create([
+            'owner_id' => $faker->randomElement($ownerID),
+            'option_id' => $faker->randomElement($optionID),
+            'poll_id' => $faker->randomElement($pollID),
             ]);
         } 
     }

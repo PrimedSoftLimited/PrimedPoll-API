@@ -14,7 +14,7 @@ class CreateIntrestsTable extends Migration
     public function up()
     {
         Schema::create('intrests', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('intrest');
             $table->timestamps();
         });
