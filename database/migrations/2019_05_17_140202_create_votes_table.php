@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserinterestsTable extends Migration
+class CreateVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,21 @@ class CreateUserinterestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('userinterests', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('owner_id')->unsigned();
-            $table->unsignedInteger('interest_id');
+        Schema::create('votes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('option_id');
+            $table->unsignedInteger('poll_id');
             $table->timestamps();
-
 
             $table->foreign('owner_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('interest_id')
-                ->references('id')
-                ->on('intrests')
+            $table->foreign('poll_id')
+                ->references('poll_id')
+                ->on('options')
                 ->onDelete('cascade');
         });
     }
@@ -39,6 +39,6 @@ class CreateUserinterestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userinterests');
+        Schema::dropIfExists('votes');
     }
 }

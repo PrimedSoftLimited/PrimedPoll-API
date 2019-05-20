@@ -14,10 +14,21 @@ class CreateOptionsTable extends Migration
     public function up()
     {
         Schema::create('options', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('poll_id');
+            $table->unsignedInteger('owner_id');
             $table->timestamps();
+
+            $table->foreign('poll_id')
+                ->references('id')
+                ->on('polls')
+                ->onDelete('cascade');
+
+            $table->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
