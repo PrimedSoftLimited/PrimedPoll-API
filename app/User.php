@@ -53,7 +53,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
     public function interest()
     {
-        return $this->hasMany('App\Intrest');
+        return $this->hasMany('App\Interest');
     }
 
     public function options()

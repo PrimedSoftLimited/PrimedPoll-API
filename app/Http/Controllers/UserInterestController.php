@@ -26,7 +26,7 @@ class UserInterestController extends Controller
 
     public function showAllInterest()
     {
-        $interest = Intrest::all();
+        $interest = Interest::all();
         return response()->json($interest, 200);
     }
 
@@ -43,7 +43,7 @@ class UserInterestController extends Controller
 
     public function showAllIntrerestPoll($interest_id)
     {   
-        $interest = Intrest::where('id', $interest_id)->exists();
+        $interest = Interest::where('id', $interest_id)->exists();
 
             if ($interest){
 

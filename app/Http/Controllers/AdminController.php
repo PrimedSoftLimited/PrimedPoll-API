@@ -22,7 +22,6 @@ class AdminController extends Controller
     {
         $this->middleware('admin.auth');
     }
-
     
     public function users()
     {

@@ -19,7 +19,7 @@ class Intrest extends Model implements AuthenticatableContract, AuthorizableCont
      */
     
     protected $fillable = [
-        'intrest',
+        'interest',
     ];
 
     /**

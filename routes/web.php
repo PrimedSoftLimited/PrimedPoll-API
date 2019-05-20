@@ -37,7 +37,6 @@ $router->put('api/password/change', 'ChangePasswordController@updatepassword');
 
 //JuniCodefire****************Admin Custom Routes**************** */
 $router->post('api/admin/login', 'SignInController@adminLogin');
-$router->get('api/interest', 'ShowIntrestController@index');
 //****************End Routes****************** */
 
 
@@ -48,10 +47,10 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //JuniCodefire************************************* */
     $router->get('admin/profile', 'AdminProfileController@adminData');
     $router->put('admin/password/change', 'AdminProfileController@updatePass');
-    $router->post('admin/create/interest', 'CreateIntrestController@store');
-    $router->get('admin/show/all/interest', 'CreateIntrestController@index');
-    $router->put('admin/edit/interest/{intrest_id}', 'CreateIntrestController@update');
-    $router->delete('admin/delete/interest/{intrest_id}', 'CreateIntrestController@destroy');
+    $router->post('admin/create/interest', 'AdminInterestController@store');
+    $router->get('admin/show/all/interest', 'AdminInterestController@index');
+    $router->put('admin/edit/interest/{interest_id}', 'AdminInterestController@update');
+    $router->delete('admin/delete/interest/{interest_id}', 'AdminInterestController@destroy');
     //************************************** */
 
     //for admin******************************Jeremiahiro******************************start/
@@ -66,8 +65,8 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //************************************** */
    
     //for users******************************Jeremiahiro******************************start/
-    $router->put('/edit', 'EditProfileController@editprofile');
-    $router->post('/upload', 'EditProfileController@uploadImage');
+    $router->put('/edit', 'UserProfileController@editprofile');
+    $router->post('/upload', 'UserProfileController@uploadImage');
 
             // show all existing interest as created by admin
             $router->get('/interest', 'UserInterestController@showAllInterest');
@@ -119,12 +118,11 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //for users******************************Jeremiahiro******************************end here/
 
 
-
     //Tino
-    $router->post('/polls/create', 'PollController@createpoll');
+
 
     //francise 
-    $router->put('/complete/registration', 'CompleteRegistrationController@update');
-    $router->get('/profile', 'ProfileController@profile');
+    $router->put('/complete/registration', 'UserCompleteRegistrationController@update');
+    $router->get('/profile', 'UserProfileController@index');
     //************************************** */
 });
