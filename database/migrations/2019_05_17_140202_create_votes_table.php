@@ -25,6 +25,11 @@ class CreateVotesTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
+            $table->foreign('option_id')
+                ->references('id')
+                ->on('options')
+                ->onDelete('cascade');
+
             $table->foreign('poll_id')
                 ->references('poll_id')
                 ->on('options')

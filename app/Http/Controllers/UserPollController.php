@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Poll;
 use App\User;
+use App\Option;
 use App\Intrest;
 use App\Userinterest;
 use Faker\Factory as Faker;
@@ -48,6 +49,7 @@ class UserPollController extends Controller
 
         if(Auth::user()->id == $interest->owner_id)
         {
+            // return $request;
             $this->validatePoll($request);
             $poll = new Poll;
             if(!Poll::where('name', $request->input('name'))->where('interest_id', $interest->id)->exists())
@@ -58,9 +60,20 @@ class UserPollController extends Controller
                     $poll->interest_id = $interest->id;
                     $poll->owner_id = Auth::user()->id;
                     $poll->save();
-    
+                    
+                    $items = $request->input('options');
+
+                    foreach($items as $item) {
+                        $option = new Option;
+                        $option->option = $item['option'];
+                        $option->owner_id = Auth::user()->id;
+                        $option->poll_id = $poll->id;
+                        $option->save();
+                    }
+
                     $res['status'] = "{$poll->name} Created Successfully!";
                     $res['poll'] = $poll;
+                    $res['options'] = Option::where('poll_id', $poll->id)->get();
                     return response()->json($res, 201);
                 
                  } return response()->json('Poll exist for Interest', 400);
@@ -117,6 +130,7 @@ class UserPollController extends Controller
 
 		$rules = [
             'name' => 'required|min:3',
+            'options.*.option' => 'required',
             'startdate' => 'required|date|before:expirydate',
             'expirydate' => 'required|date|after:startdate',
         ];

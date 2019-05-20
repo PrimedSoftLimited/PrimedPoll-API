@@ -100,8 +100,6 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
                     $router->delete('/poll/{id}', 'UserPollController@destroy');
                     
 
-                            // a user can create options under a poll
-                            $router->post('/{poll_id}/option', 'UserOptionsController@create');
 
                             // show single options of a poll and their vote count
                             $router->get('/{option_id}/option', 'UserOptionsController@show');
