@@ -46,11 +46,12 @@
 Admin Delete User - https://documenter.getpostman.com/view/6899786/S1TN72EW
 
 **user**
-- [x] * user complete registration*
+- [x] *user complete registration*
 
 **admin**
 - [x] *admin delete user*
 
+---
 
 Signin Documentation - https://documenter.getpostman.com/view/6843654/S1ENyJhJ
 

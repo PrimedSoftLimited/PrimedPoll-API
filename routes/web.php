@@ -83,11 +83,11 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     // a user can deselect an interest
     $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
 
-            // show all existing interest as created by admin
-            $router->get('interest/', 'InterestController@ShowAllInterest');
+    // show all existing interest as created by admin
+    $router->get('interest/', 'InterestController@ShowAllInterest');
 
-            // show a single interest selected interest
-            $router->get('/user/interest/{id}', 'UserInterestController@show');
+    // show a single interest selected interest
+    $router->get('/user/interest/{id}', 'UserInterestController@show');
 
     // a user can create poll under an interest
     $router->post('/{userinterest_id}/poll', 'UserPollController@create');
