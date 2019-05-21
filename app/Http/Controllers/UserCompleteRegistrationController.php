@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Interest;
 use App\Userinterest;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use libphonenumber\PhoneNumberType;
 
-
-
-class CompleteRegistrationController extends Controller
+class UserCompleteRegistrationController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,7 +17,7 @@ class CompleteRegistrationController extends Controller
      * @return void
      */
 
-    public function update(User $user, Userinterest $userinterest, Request $request)
+    public function update(User $user, Request $request)
     {
         $user = Auth::guard('api')->user();
 
@@ -31,31 +29,31 @@ class CompleteRegistrationController extends Controller
         $user->dob = $request->input('dob');
         $user->image = 'user.jpg';
 
+        $items = $request->input('interests');
 
-
-        $interests = $request->input('interests');
-
-        foreach ($interests as $interest) {
-
-          $userinterest->owner_id = $user->id;
-          $userinterest->interest_id = $interest;
-          $userinterest->save();
-
+        foreach($items as $item) {
+            $userinterest = new Userinterest;
+            $userinterest->owner_id = $user->id;
+            $userinterest->interest_id = $item['interest_id'];
+            $userinterest->save();
         }
+
         $user->save();      
-		$res['message'] = "{$user->first_name} Updated Successfully!";        
-        return response()->json($res, 200); 
+
+        $msg['success'] = true;
+        $msg['user'] = $user;
+        $msg['message'] = "Registration Completed";
+        return response()->json($msg, 201);
     }
 
     public function validateRequest($request)
     {
-
        $rules = [
-        'first_name' => 'users,first_name,string|required',
-        'last_name' => 'unique:users,last_name,string|required',
-        'phone' => 'users,phone,required|phone:NG,US,mobile',
-        'dob' => 'date',
-        'interest' => 'array|required',
+        'first_name' => '|required',
+        'last_name' => 'string|required',
+        'phone' => 'phone:NG,US,mobile|required',
+        'dob' => 'date|required',
+        'interests.*.interest_id' => 'required',
         ];
 
         $messages = [
