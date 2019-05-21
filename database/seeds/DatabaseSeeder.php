@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
 
         $faker = Faker::create();
         $ownerID = DB::table('users')->pluck('id');
-        $pollID = DB::table('polls')->pluck('id');
+        $pollID = DB::table('options')->pluck('poll_id');
         $optionID = DB::table('interests')->pluck('id');
         foreach (range(1,50) as $index) {
             \App\Vote::create([

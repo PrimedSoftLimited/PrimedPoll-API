@@ -9,6 +9,7 @@
 - [x] *upload image*
 - [x] *edit profile*
 
+
 - [x] *show all existing interest as created by admin*
 - [x] *show all existing interest as created by admin and their polls as created by users*
 - [x] *show all interest selected by a user*
@@ -32,8 +33,20 @@
 - [x] *view all users*
 - [x] *view all polls*
 - [x] *view trending intrest*
+- [x] *delete a single user*
 
 ---
+
+### Francis
+
+Admin Delete User - https://documenter.getpostman.com/view/6899786/S1TN72EW
+
+**user**
+- [x] * user complete registration*
+
+**admin**
+- [x] *admin delete user*
+
 
 Signin Documentation - https://documenter.getpostman.com/view/6843654/S1ENyJhJ
 
