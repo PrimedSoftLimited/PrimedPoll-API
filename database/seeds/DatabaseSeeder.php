@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             $interest = [ 'football', 'politics', 'movie', 'tech', 'research', 'sex', 'relationship', 'money'];
                 foreach ( $interest as $interest ) { 
             \App\Interest::create([
-                'interest' => trim( strtolower( $interest ) ),
+                'title' => trim( strtolower( $interest ) ),
             ]);
         }
 

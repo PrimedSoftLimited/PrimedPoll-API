@@ -16,8 +16,20 @@ class InterestController extends Controller
     
     public function index()
     {
-        $interest = Interest::with('poll')->get();
+        $interest = Interest::all();
 
         return response()->json($interest, 200);
+    }
+
+    public function show($id)
+    {   
+        $check = Interest::where('id', $id)->exists();
+
+        if($check)
+        {
+            $interest = Interest::where('id', $id)->with('poll')->get();
+            return response()->json($interest, 200);
+        
+        } return response()->json("Interest Does Not Exist", 200);
     }
 }
