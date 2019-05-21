@@ -19,6 +19,8 @@ $router->get('/api', function () use ($router) {
     return ["message" => "Welcome to PrimePoll API"];
 });
 
+// show all existing interest as created by admin with affiliated poll as created by users
+$router->get('/api/interest/poll', 'InterestController@index');
 
 //****************Users Routes**************** */
 $router->post('/api/register', 'SignupController@register');
@@ -54,11 +56,16 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //************************************** */
 
     //for admin******************************Jeremiahiro******************************start/
-    $router->get('admin/users', 'AdminController@users');
-    $router->get('admin/polls', 'AdminController@polls');
-    $router->get('admin/trending', 'AdminController@trending');
-    //for admin******************************Jeremiahiro******************************end here/
 
+    // Lets admin view all registered users
+    $router->get('admin/users', 'AdminController@users');
+
+    // lets admin view all polls and affiliated options
+    $router->get('admin/polls', 'AdminController@polls');
+
+    // admin can view trending poll
+    $router->get('admin/trending', 'AdminController@trending');
+  
     //for admin******************************Francis******************************start/
     $router->delete('admin/users/{user_id}', 'AdminController@deleteUser');
     //for admin******************************Jeremiahiro******************************end here/
@@ -72,21 +79,15 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     $router->put('/edit', 'UserProfileController@editprofile');
     $router->post('/upload', 'UserProfileController@uploadImage');
 
-    // show all existing interest as created by admin
-    $router->get('/interest', 'UserInterestController@showAllInterest');
-
-    // show all existing interest as created by admin and their polls as created by users
-    $router->get('/{interest_id}/poll', 'UserInterestController@showAllIntrerestPoll');
-    
-    // show all interest selected by a user
-    $router->get('/user/interest', 'UserInterestController@index');
-
-    // show a single interest selected interest
-    $router->get('/user/interest/{id}', 'UserInterestController@show');
 
     // a user can deselect an interest
     $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
 
+            // show all existing interest as created by admin
+            $router->get('interest/', 'InterestController@ShowAllInterest');
+
+            // show a single interest selected interest
+            $router->get('/user/interest/{id}', 'UserInterestController@show');
 
     // a user can create poll under an interest
     $router->post('/{userinterest_id}/poll', 'UserPollController@create');

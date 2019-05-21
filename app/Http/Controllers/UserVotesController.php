@@ -6,7 +6,7 @@ use App\User;
 use App\Poll;
 use App\Vote;
 use App\Option;
-use App\Intrest;
+use App\Interest;
 use App\Userinterest;
 use Faker\Factory as Faker;
 use Illuminate\Http\Request;

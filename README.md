@@ -3,6 +3,11 @@
 ### Jeremiah Iro
 (https://documenter.getpostman.com/view/6901755/S1EL31qv)
 
+
+**annonymous**
+- [x] *show all existing interest as created by admin with affiliated poll as created by users*
+
+
 **user**
 - [x] *signup*
 - [x] *verify account*
@@ -30,10 +35,9 @@
 
 
 **admin**
-- [x] *view all users*
-- [x] *view all polls*
-- [x] *view trending intrest*
-- [x] *delete a single user*
+- [x] *admin can view all users*
+- [x] *admin can view all polls and affiliated options*
+- [x] *admin can view trending poll*
 
 ---
 
