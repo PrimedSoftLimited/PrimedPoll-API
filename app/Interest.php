@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Userinterests extends Model implements AuthenticatableContract, AuthorizableContract
+class Interest extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
@@ -19,7 +19,7 @@ class Userinterests extends Model implements AuthenticatableContract, Authorizab
      */
     
     protected $fillable = [
-        'userinterests',
+        'interest',
     ];
 
     /**

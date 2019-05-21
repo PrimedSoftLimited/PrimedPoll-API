@@ -9,8 +9,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use libphonenumber\PhoneNumberType;
 
-class EditProfileController extends Controller
+class UserProfileController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+
+    public function index(User $user)
+    {
+        $user = Auth::user();
+             
+        return response()->json(['data' => [ 'success' => true, 'user' => $user ]], 200);
+    }
 
     public function uploadImage(Request $request)
     {
@@ -40,7 +52,8 @@ class EditProfileController extends Controller
         $user->image = $image_url;
 
        $user->save();
-   }
+    }
+
     public function editProfile(Request $request)
     {
         $user = Auth::user();

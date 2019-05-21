@@ -50,4 +50,19 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     {
         return $this->hasMany('App\Poll');
     }
+
+    public function interest()
+    {
+        return $this->hasMany('App\Interest');
+    }
+
+    public function options()
+    {
+        return $this->hasMany('App\Option');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
+    }
 }

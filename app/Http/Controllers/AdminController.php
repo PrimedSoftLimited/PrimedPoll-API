@@ -22,7 +22,6 @@ class AdminController extends Controller
     {
         $this->middleware('admin.auth');
     }
-
     
     public function users()
     {
@@ -33,25 +32,25 @@ class AdminController extends Controller
 
     public function polls()
     {
-        $polls = Poll::orderBy('created_at', 'desc')->paginate(20);
+        $polls = Poll::where('expirydate', '>=', Carbon::now())->orderBy('created_at', 'asc')->get();
 
 		return response()->json($polls, 200);
     }
 
     public function trending()
     {
-        $expirydate = DB::table('polls')->pluck('expirydate');
+        $poll = Poll::where('expirydate', '>=', Carbon::now());
 
-        if($expirydate >= 'CURRENT_TIMESTAMP'){
-                $trending = DB::table('options')
-                ->select('poll_id', DB::raw('count(*) as engagement'))
+        if($poll){
+
+                $trending = DB::table('votes')
+                ->select('poll_id', DB::raw('count(*) as totalVote'))
                 ->groupBy('poll_id')
-                ->orderBy('engagement', 'desc')
+                ->orderBy('totalVote', 'desc')
                 ->take(10)
                 ->get();           
                 return response()->json($trending, 200);
-            } else {
-                return response()->json('No trending Post', 202);
-        } 
+            
+        } return response()->json('No trending Post', 202);
     }
 }

@@ -45,5 +45,5 @@ class ChangePasswordController extends Controller
              return response()->json(['data' => ['success' => true, 'message' => "Error changing password...."]], 400);
           }
        }
-
+    }
 }
