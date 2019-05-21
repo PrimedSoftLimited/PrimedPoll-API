@@ -32,6 +32,7 @@
 - [x] *view all users*
 - [x] *view all polls*
 - [x] *view trending intrest*
+- [x] *delete a single user*
 
 ---
 
