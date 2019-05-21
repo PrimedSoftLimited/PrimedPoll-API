@@ -25,9 +25,9 @@ $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
 $router->post('api/user/login', 'SignInController@userLogin');
 
+//****User Complete Registration*****/
+$router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
 
-// This controller completes user registration
-$router->put('api/complete', 'CompleteRegistrationController@update');
 
 //Tino
 $router->post('api/password/reset', 'PasswordController@resetpassword');
@@ -124,7 +124,6 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
 
     //francis
-    $router->put('/complete/registration', 'UserCompleteRegistrationController@update');
     $router->get('/profile', 'UserProfileController@index');
     //************************************** */
 });
