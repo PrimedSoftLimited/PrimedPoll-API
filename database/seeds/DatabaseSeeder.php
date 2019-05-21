@@ -37,13 +37,13 @@ class DatabaseSeeder extends Seeder
             $faker = Faker::create();
             $interest = [ 'football', 'politics', 'movie', 'tech', 'research', 'sex', 'relationship', 'money'];
                 foreach ( $interest as $interest ) { 
-            \App\Intrest::create([
-                'intrest' => trim( strtolower( $interest ) ),
+            \App\Interest::create([
+                'interest' => trim( strtolower( $interest ) ),
             ]);
         }
 
         $faker = Faker::create();
-        $interestID = DB::table('intrests')->pluck('id');
+        $interestID = DB::table('interests')->pluck('id');
         $userID= DB::table('users')->pluck('id');
         foreach (range(1,20) as $index) {
             \App\Poll::create([
@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
             'interest_id' => $faker->randomElement($interestID),
             'name' => $faker->sentence,
             'startdate' => Carbon::now(),
+            
             'expirydate' => $faker->dateTimeBetween($startdate = 'now', $expirydate = '+30 days'),
             ]);
         } 
@@ -62,14 +63,14 @@ class DatabaseSeeder extends Seeder
         foreach (range(1,60) as $index) {
             \App\Option::create([
             'poll_id' => $faker->randomElement($pollID),
-            'name' => $faker->randomElement($options),
+            'option' => $faker->randomElement($options),
             'owner_id' => $faker->randomElement($ownerID),
             ]);
         } 
 
         $faker = Faker::create();
         $ownerID = DB::table('users')->pluck('id');
-        $interestID = DB::table('intrests')->pluck('id');
+        $interestID = DB::table('interests')->pluck('id');
         foreach (range(1,10) as $index) {
             \App\Userinterest::create([
             'owner_id' => $faker->randomElement($ownerID),
@@ -80,9 +81,9 @@ class DatabaseSeeder extends Seeder
         $faker = Faker::create();
         $ownerID = DB::table('users')->pluck('id');
         $pollID = DB::table('polls')->pluck('id');
-        $optionID = DB::table('intrests')->pluck('id');
-        foreach (range(1,10) as $index) {
-            \App\Votes::create([
+        $optionID = DB::table('interests')->pluck('id');
+        foreach (range(1,50) as $index) {
+            \App\Vote::create([
             'owner_id' => $faker->randomElement($ownerID),
             'option_id' => $faker->randomElement($optionID),
             'poll_id' => $faker->randomElement($pollID),

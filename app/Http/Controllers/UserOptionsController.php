@@ -33,31 +33,6 @@ class UserOptionsController extends Controller
             return response()->json('Unauthorized Access!', 400);
     }
 
-    public function create(Request $request, $id)
-    {
-        $poll = Poll::findOrFail($id);
-
-        if(Auth::user()->id == $poll->owner_id)
-        {
-            $this->validatePoll($request);
-            $option = new Option;
-            if(!Option::where('name', $request->input('name'))->where('poll_id', $poll->id)->exists())
-                {
-                    $option->name = $request->input('name');
-                    $option->owner_id = Auth::user()->id;
-                    $option->poll_id = $poll->id;
-
-                    $option->save();
-    
-                    $res['status'] = "Success";
-                    $res['option'] = $option;
-                    return response()->json($res, 201);
-                
-                 } return response()->json('Option exist for Poll', 400);
-
-            } return response()->json('Unauthorized');
-    }
-
     public function update(Request $request, $id)
     {
         $option = Option::findOrFail($id);
@@ -94,7 +69,7 @@ class UserOptionsController extends Controller
     public function validatePoll(Request $request){
 
 		$rules = [
-            'name' => 'required|min:3',
+            'option' => 'required|min:3',
         ];
 		$this->validate($request, $rules);
     }

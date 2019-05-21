@@ -27,7 +27,7 @@ class CreateUserinterestsTable extends Migration
 
             $table->foreign('interest_id')
                 ->references('id')
-                ->on('intrests')
+                ->on('interests')
                 ->onDelete('cascade');
         });
     }

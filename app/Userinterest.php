@@ -38,7 +38,7 @@ class Userinterest extends Model implements AuthenticatableContract, Authorizabl
 
     public function interest()
     {
-        return $this->belongsTo('App\Intrest');
+        return $this->belongsTo('App\Interest');
     }
 
     public function options()
