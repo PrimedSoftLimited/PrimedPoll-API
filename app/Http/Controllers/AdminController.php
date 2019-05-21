@@ -53,4 +53,13 @@ class AdminController extends Controller
             
         } return response()->json('No trending Post', 202);
     }
+
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return response()->json(['data' =>['success' => true, 'message' => 'User Deleted']], 200);
+    }
+
 }

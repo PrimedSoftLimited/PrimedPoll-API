@@ -27,9 +27,9 @@ $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
 $router->post('api/user/login', 'SignInController@userLogin');
 
+//****User Complete Registration*****/
+$router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
 
-// This controller completes user registration
-$router->put('api/complete', 'CompleteRegistrationController@update');
 
 //Tino
 $router->post('api/password/reset', 'PasswordController@resetpassword');
@@ -65,6 +65,9 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
     // admin can view trending poll
     $router->get('admin/trending', 'AdminController@trending');
+  
+    //for admin******************************Francis******************************start/
+    $router->delete('admin/users/{user_id}', 'AdminController@deleteUser');
     //for admin******************************Jeremiahiro******************************end here/
 
 
@@ -77,11 +80,8 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     $router->post('/upload', 'UserProfileController@uploadImage');
 
 
-            // show all existing interest as created by admin and their polls as created by users
-            $router->get('/{interest_id}/poll', 'UserInterestController@showAllIntrerestPoll');
-            
-            // show all interest selected by a user
-            $router->get('/user/interest', 'UserInterestController@index');
+    // a user can deselect an interest
+    $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
 
             // show all existing interest as created by admin
             $router->get('interest/', 'InterestController@ShowAllInterest');
@@ -89,47 +89,42 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
             // show a single interest selected interest
             $router->get('/user/interest/{id}', 'UserInterestController@show');
 
-            // a user can deselect an interest
-            $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
+    // a user can create poll under an interest
+    $router->post('/{userinterest_id}/poll', 'UserPollController@create');
+
+    // show all poll a user has created, their options and total vote count
+    $router->get('/poll', 'UserPollController@index');
+
+    // show one poll a user has created, their options and total vote count
+    $router->get('/poll/{id}', 'UserPollController@show');
+
+    // a user can edit/update a poll he created
+    $router->put('/poll/{id}', 'UserPollController@update');
+
+    // a user can delete a poll he created
+    $router->delete('/poll/{id}', 'UserPollController@destroy');
+    
 
 
-                    // a user can create poll under an interest
-                    $router->post('/{userinterest_id}/poll', 'UserPollController@create');
+    // show single options of a poll and their vote count
+    $router->get('/{option_id}/option', 'UserOptionsController@show');
 
-                    // show all poll a user has created, their options and total vote count
-                    $router->get('/poll', 'UserPollController@index');
-                
-                    // show one poll a user has created, their options and total vote count
-                    $router->get('/poll/{id}', 'UserPollController@show');
+    // edit single option of a poll
+    $router->put('/{option_id}/option', 'UserOptionsController@update');
 
-                    // a user can edit/update a poll he created
-                    $router->put('/poll/{id}', 'UserPollController@update');
+    // delete single option of a poll
+    $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
 
-                    // a user can delete a poll he created
-                    $router->delete('/poll/{id}', 'UserPollController@destroy');
-                    
+    // a user can vote
+    $router->post('/{poll_id}/vote', 'UserVotesController@create');
 
-
-                            // show single options of a poll and their vote count
-                            $router->get('/{option_id}/option', 'UserOptionsController@show');
-
-                            // edit single option of a poll
-                            $router->put('/{option_id}/option', 'UserOptionsController@update');
-
-                            // delete single option of a poll
-                            $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
-
-                                    // a user can vote
-                                     $router->post('/{poll_id}/vote', 'UserVotesController@create');
- 
     //for users******************************Jeremiahiro******************************end here/
 
 
     //Tino
 
 
-    //francise 
-    $router->put('/complete/registration', 'UserCompleteRegistrationController@update');
+    //francis
     $router->get('/profile', 'UserProfileController@index');
     //************************************** */
 });
