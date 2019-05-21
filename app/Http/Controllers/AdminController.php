@@ -32,7 +32,7 @@ class AdminController extends Controller
 
     public function polls()
     {
-        $polls = Poll::where('expirydate', '>=', Carbon::now())->orderBy('created_at', 'asc')->get();
+        $polls = Poll::where('expirydate', '>=', Carbon::now())->with('options')->orderBy('created_at', 'asc')->paginate(20);
 
 		return response()->json($polls, 200);
     }
