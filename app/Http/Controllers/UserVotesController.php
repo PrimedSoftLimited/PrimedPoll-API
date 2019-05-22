@@ -35,7 +35,7 @@ class UserVotesController extends Controller
                     $vote->poll_id = $poll->id;
                     $vote->save();
     
-                    return response()->json('WELDONE', 200);
+                    return response()->json('WELLDONE', 200);
     
                 } return response()->json('WHAT MAKES YOU THINK YOU CAN VOTE TWICE?');
     }
