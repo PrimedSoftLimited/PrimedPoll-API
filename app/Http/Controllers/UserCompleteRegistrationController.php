@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Interest;
 use App\Userinterest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +29,7 @@ class UserCompleteRegistrationController extends Controller
         $user->image = 'user.jpg';
 
         $items = $request->input('interests');
-
+        
         foreach($items as $item) {
             $userinterest = new Userinterest;
             $userinterest->owner_id = $user->id;
@@ -43,6 +42,7 @@ class UserCompleteRegistrationController extends Controller
         $msg['success'] = true;
         $msg['user'] = $user;
         $msg['message'] = "Registration Completed";
+        $msg['Userinterests'] = Userinterest::where('owner_id', Auth::user()->id)->with('interest')->get();
         return response()->json($msg, 201);
     }
 
