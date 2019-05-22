@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration
+class CreateVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,26 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('options', function (Blueprint $table) {
+        Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('option');
-            $table->unsignedInteger('poll_id');
             $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('option_id');
+            $table->unsignedInteger('poll_id');
             $table->timestamps();
-
-            $table->foreign('poll_id')
-                ->references('id')
-                ->on('polls')
-                ->onDelete('cascade');
 
             $table->foreign('owner_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('option_id')
+                ->references('id')
+                ->on('options')
+                ->onDelete('cascade');
+
+            $table->foreign('poll_id')
+                ->references('poll_id')
+                ->on('options')
                 ->onDelete('cascade');
         });
     }
@@ -39,6 +44,6 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('options');
+        Schema::dropIfExists('votes');
     }
 }

@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Userinterest;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use libphonenumber\PhoneNumberType;
 
-
-
-class CompleteRegistrationController extends Controller
+class UserCompleteRegistrationController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -31,30 +28,32 @@ class CompleteRegistrationController extends Controller
         $user->dob = $request->input('dob');
         $user->image = 'user.jpg';
 
-
-
-        $interests = $request->input('interests');
-
-        foreach ($interests as $interest) {
-          $userinterest = new Userinterest();
-          $userinterest->owner_id = $user->id;
-          $userinterest->interest_id = $interest;
-          $userinterest->save();
+        $items = $request->input('interests');
+        
+        foreach($items as $item) {
+            $userinterest = new Userinterest;
+            $userinterest->owner_id = $user->id;
+            $userinterest->interest_id = $item['interest_id'];
+            $userinterest->save();
         }
 
-         $user->save();      
-         return response()->json(['data' =>['success' => true, 'user' => $user, 'message' => 'Registration Completed']], 200);
+        $user->save();      
+
+        $msg['success'] = true;
+        $msg['user'] = $user;
+        $msg['message'] = "Registration Completed";
+        $msg['Userinterests'] = Userinterest::where('owner_id', Auth::user()->id)->with('interest')->get();
+        return response()->json($msg, 201);
     }
 
     public function validateRequest($request)
     {
-
        $rules = [
-        'first_name' => 'string|required',
+        'first_name' => '|required',
         'last_name' => 'string|required',
         'phone' => 'phone:NG,US,mobile|required',
         'dob' => 'date|required',
-        'interests' => 'array|required',
+        'interests.*.interest_id' => 'required',
         ];
 
         $messages = [
