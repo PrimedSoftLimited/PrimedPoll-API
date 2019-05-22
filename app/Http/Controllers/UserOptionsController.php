@@ -41,7 +41,7 @@ class UserOptionsController extends Controller
         {
             $this->validatePoll($request);
 
-                $option->name = $request->input('name');
+                $option->options = $request->input('option');
                 $option->save();
 
                 $res['status'] = "Updated Successfully!";
