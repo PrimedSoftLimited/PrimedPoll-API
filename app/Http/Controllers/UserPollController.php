@@ -84,6 +84,7 @@ class UserPollController extends Controller
     {
         $pollCheck = Poll::where('id', $id)->exists();
         $poll = Poll::findOrFail($id);
+        $option = Option::where('poll_id', $poll)->get();
 
         if(Auth::user()->id == $poll->owner_id)
         {
@@ -96,8 +97,19 @@ class UserPollController extends Controller
                 $poll->expirydate = $request->input('expirydate');
                 $poll->save();
 
-                $res['status'] = "{$poll->name} Created Successfully!";
+                $items = $request->input('options');
+
+                foreach($items as $item) {
+                    $option = new Option;
+                    $option->option = $item['option'];
+                    $option->owner_id = Auth::user()->id;
+                    $option->poll_id = $poll->id;
+                    $option->save();
+                }
+
+                $res['status'] = "{$poll->name} Updated Successfully!";
                 $res['poll'] = $poll;
+                $res['options'] = Option::where('poll_id', $poll->id)->get();
                 return response()->json($res, 201);
 
             } return response()->json('Poll Does not Exist', 400);
