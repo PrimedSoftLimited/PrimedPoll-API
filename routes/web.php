@@ -28,7 +28,7 @@ $router->get('/api/interest/{interest_id}', 'InterestController@show');
 //****************Users Routes**************** */
 $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
-$router->post('api/user/login', 'SignInController@userLogin');
+$router->post('api/login', 'SignInController@userLogin');
 
 //****User Complete Registration*****/
 $router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
@@ -72,7 +72,6 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //for admin******************************Francis******************************start/
     $router->delete('admin/users/{user_id}', 'AdminController@deleteUser');
     //for admin******************************Jeremiahiro******************************end here/
-
 
 
     //This is the Users Public route
@@ -131,4 +130,10 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //francis
     $router->get('/profile', 'UserProfileController@index');
     //************************************** */
+
+    //JuniCodefire
+    $router->get('/feeds', 'UserFeedsController@index');
+    $router->get('/feeds/{offset}', 'UserFeedsController@scrolledfeeds');
+    //***************************************************
+
 });
