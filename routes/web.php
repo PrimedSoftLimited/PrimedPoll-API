@@ -125,7 +125,7 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
     //francis
     $router->get('/profile', 'UserProfileController@index');
-    $router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
+    $router->put('/complete/registration', 'UserCompleteRegistrationController@update');
 
     //************************************** */
 
