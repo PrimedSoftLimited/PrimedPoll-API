@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Interest;
 
-class AdminCreateInterestController extends Controller
+class AdminInterestController extends Controller
 {
     /**
      * Create a new controller instance.
