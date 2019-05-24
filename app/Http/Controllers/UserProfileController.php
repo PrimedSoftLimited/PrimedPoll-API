@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Cloudder;
+use App\Userinterest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,32 +27,45 @@ class UserProfileController extends Controller
 
     public function uploadImage(Request $request)
     {
+        $this->validate($request, [
+            'image' => 'image|max:4000|required',
+            ]);
         $user = Auth::user();
 
         if ($request->hasFile('image') && $request->file('image')->isValid()){
+            if ($user->image != "noimage.jpg") {
+                $oldImage = pathinfo($user->image, PATHINFO_FILENAME);
+                try {
+                    $delete_old_image = Cloudder::destroyImage($oldImage);
+                } catch (Exception $e) {
+                    $mes['error'] = "Try Again";
+                    return back()->with($mes);
+                }
+            }
 
             $user = $request->file('image');
             $filename = $request->file('image')->getClientOriginalName();
             $image = $request->file('image')->getRealPath();
-            Cloudder::upload($image_name, null);
+            Cloudder::upload($image, null);
 
-            list($width, $height) = getimagesize($image_name);
-            $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
+            list($width, $height) = getimagesize($image);
+            $image = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
 
-            $this->saveImages($request, $image_url);
+            $this->saveImages($request, $image);
 
-		$res['message'] = "Upload Successful!";        
+        $res['message'] = "Upload Successful!";  
+        $res['image'] = $image;          
+        return response()->json($res, 200); 
 
         }
-        return response()->json($res, 200); 
     }
 
-    public function saveImages(Request $request, $image_url)
+    public function saveImages(Request $request, $image)
     {
         $user = Auth::user();
-        $user->image = $image_url;
 
-       $user->save();
+        $user->image = $image;
+        $user->save();
     }
 
     public function editProfile(Request $request)
@@ -63,16 +77,26 @@ class UserProfileController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
-        $user->bio = $request->input('bio');
         $user->dob = $request->input('dob');
-        $user->category = $request->input('category');
+
+        $items = $request->input('interests');
+        
+        foreach($items as $item) {
+            $userinterest = new Userinterest;
+            $userinterest->owner_id = $user->id;
+            $userinterest->interest_id = $item['interest_id'];
+            $userinterest->save();
+        }
+
         if(!empty($request->input('password')))
         {
             $user->password = Hash::make($request->input('password'));
         }
        
         $user->save();
-		$res['message'] = "{$user->first_name} Updated Successfully!";        
+		$res['message'] = "Account Updated Successfully!";        
+        $res['user'] = $user;
+        $res['Userinterests'] = Userinterest::where('owner_id', Auth::user()->id)->with('interest')->get();
         return response()->json($res, 200); 
     }
 
@@ -81,12 +105,11 @@ class UserProfileController extends Controller
        $id = Auth::id();
 
        $rules = [
-        'first_name' => 'string|required',
+        'first_name' => 'required',
         'last_name' => 'string|required',
-        'phone' => 'required|phone:NG,US,mobile',
-        'bio' => 'required|min:5|max:400',
-        'dob' => 'date',
-        'category' => 'string',
+        'phone' => 'phone:NG,US,mobile|required',
+        'dob' => 'date|required',
+        'interests.*.interest_id' => 'required',
         'password' => 'nullable|min:6|different:current_password|confirmed',
         ];
 
@@ -94,7 +117,7 @@ class UserProfileController extends Controller
             'required' => ':attribute is required',
             'phone' => ':attribute number is invalid'
         ];
-
+        
         $this->validate($request, $rules);
 
     }

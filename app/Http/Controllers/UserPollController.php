@@ -52,9 +52,9 @@ class UserPollController extends Controller
             // return $request;
             $this->validatePoll($request);
             $poll = new Poll;
-            if(!Poll::where('name', $request->input('name'))->where('interest_id', $interest->id)->exists())
+            if(!Poll::where('question', $request->input('question'))->where('interest_id', $interest->id)->exists())
                 {
-                    $poll->name = $request->input('name');
+                    $poll->question = $request->input('question');
                     $poll->startdate = $request->input('startdate');
                     $poll->expirydate = $request->input('expirydate');
                     $poll->interest_id = $interest->id;
@@ -71,7 +71,7 @@ class UserPollController extends Controller
                         $option->save();
                     }
 
-                    $res['status'] = "{$poll->name} Created Successfully!";
+                    $res['status'] = "{$poll->question} Created Successfully!";
                     $res['poll'] = $poll;
                     $res['options'] = Option::where('poll_id', $poll->id)->get();
                     return response()->json($res, 201);
@@ -92,7 +92,7 @@ class UserPollController extends Controller
             {
                 $this->validatePoll($request);
 
-                $poll->name = $request->input('name');
+                $poll->question = $request->input('question');
                 $poll->startdate = $request->input('startdate');
                 $poll->expirydate = $request->input('expirydate');
                 $poll->save();
@@ -107,7 +107,7 @@ class UserPollController extends Controller
                     $option->save();
                 }
 
-                $res['status'] = "{$poll->name} Updated Successfully!";
+                $res['status'] = "{$poll->question} Updated Successfully!";
                 $res['poll'] = $poll;
                 $res['options'] = Option::where('poll_id', $poll->id)->get();
                 return response()->json($res, 201);
@@ -141,7 +141,7 @@ class UserPollController extends Controller
     public function validatePoll(Request $request){
 
 		$rules = [
-            'name' => 'required|min:3',
+            'question' => 'required|min:3',
             'options.*.option' => 'required',
             'startdate' => 'required|date|before:expirydate',
             'expirydate' => 'required|date|after:startdate',

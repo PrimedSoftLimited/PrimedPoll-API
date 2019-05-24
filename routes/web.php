@@ -92,7 +92,7 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
             $router->put('/poll/{id}', 'UserPollController@update');
 
 
-            // a user can create poll under an interest
+            // a user can create poll/options under an interest
             $router->post('/{userinterest_id}/poll', 'UserPollController@create');
 
             // a user can delete a poll he created
