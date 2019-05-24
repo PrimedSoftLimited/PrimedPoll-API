@@ -16,7 +16,7 @@ class UserCompleteRegistrationController extends Controller
      * @return void
      */
 
-    public function update(User $user, Request $request)
+    public function update(Request $request)
     {
         $user = Auth::guard('api')->user();
 
