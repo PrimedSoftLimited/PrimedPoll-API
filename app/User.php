@@ -34,7 +34,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $hidden = [
-        'password',  'remember_token', 'email_verified_at','verify_token',
+        'password',  'remember_token', 'email_verified_at','verifycode',
     ];
   
       public function getJWTIdentifier() {
