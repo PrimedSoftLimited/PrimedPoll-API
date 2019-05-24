@@ -30,10 +30,6 @@ $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
 $router->post('api/login', 'SignInController@userLogin');
 
-//****User Complete Registration*****/
-$router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
-
-
 //Tino
 $router->post('api/password/reset', 'PasswordController@resetpassword');
 $router->put('api/password/change', 'ChangePasswordController@updatepassword');
@@ -129,6 +125,8 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
     //francis
     $router->get('/profile', 'UserProfileController@index');
+    $router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
+
     //************************************** */
 
     //JuniCodefire
