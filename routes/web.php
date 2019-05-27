@@ -28,11 +28,7 @@ $router->get('/api/interest/{interest_id}', 'InterestController@show');
 //****************Users Routes**************** */
 $router->post('/api/register', 'SignupController@register');
 $router->post('api/register/verify', 'VerifyUserController@verifyUser');
-$router->post('api/user/login', 'SignInController@userLogin');
-
-//****User Complete Registration*****/
-$router->put('api/complete/registration', 'UserCompleteRegistrationController@update');
-
+$router->post('api/login', 'SignInController@userLogin');
 
 //Tino
 $router->post('api/password/reset', 'PasswordController@resetpassword');
@@ -74,7 +70,6 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //for admin******************************Jeremiahiro******************************end here/
 
 
-
     //This is the Users Public route
     //************************************** */
    
@@ -93,7 +88,7 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
             $router->put('/poll/{id}', 'UserPollController@update');
 
 
-            // a user can create poll under an interest
+            // a user can create poll/options under an interest
             $router->post('/{userinterest_id}/poll', 'UserPollController@create');
 
             // a user can delete a poll he created
@@ -101,26 +96,26 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
 
 
-                    // show all interest that user subscribed to
-                    $router->get('/user/interest/', 'UserInterestController@index');
+            // show all interest that user subscribed to
+            $router->get('/user/interest/', 'UserInterestController@index');
 
-                    // show a single interest that user subscribed to
-                    $router->get('/user/interest/{id}', 'UserInterestController@show');
+            // show a single interest that user subscribed to
+            $router->get('/user/interest/{id}', 'UserInterestController@show');
 
-                    // a user can deselect an interest
-                    $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
-
-
-
-                            // show single options of a poll and their vote count
-                            $router->get('/{option_id}/option', 'UserOptionsController@show');
-
-                            // delete single option of a poll
-                            $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
+            // a user can deselect an interest
+            $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
 
 
-                                    // a user can vote
-                                    $router->post('/{poll_id}/vote', 'UserVotesController@create');
+
+            // show single options of a poll and their vote count
+            $router->get('/{option_id}/option', 'UserOptionsController@show');
+
+            // delete single option of a poll
+            $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
+
+
+            // a user can vote
+            $router->post('/{poll_id}/vote', 'UserVotesController@create');
 
     //for users******************************Jeremiahiro******************************end here/
 
@@ -130,5 +125,13 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
     //francis
     $router->get('/profile', 'UserProfileController@index');
+    $router->put('/complete/registration', 'UserCompleteRegistrationController@update');
+
     //************************************** */
+
+    //JuniCodefire
+    $router->get('/feeds', 'UserFeedsController@index');
+    $router->get('/feeds/{offset}', 'UserFeedsController@scrolledfeeds');
+    //***************************************************
+
 });

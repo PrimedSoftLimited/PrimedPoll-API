@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Interest;
 
-class AdminCreateInterestController extends Controller
+class AdminInterestController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -18,7 +18,7 @@ class AdminCreateInterestController extends Controller
         $this->middleware('admin.auth');
     }
     
-    public function index(Request $request) {
+    public function index() {
 
        $interest = Interest::all();    
        return response()->json(['data' =>['success' => true, 'interest' => $interest]], 200); 
@@ -27,28 +27,28 @@ class AdminCreateInterestController extends Controller
     public function store(Request $request, Interest $interest) {
 
         $this->validate($request, [
-            'interest'  => 'required',
+            'title'  => 'required',
         ]); 
 
-        $interest->interest = $request->input('interest');
+        $interest->title = $request->input('title');
         $interest->save();   
-        return response()->json(['data' =>['success' => true, 'messsage' => 'New Interest Added']], 201); 
+        return response()->json(['data' =>['success' => true, 'messsage' => 'New Interest Added' . $interest->title ]], 201); 
     }
 
     public function update(Request $request, $interest_id) {
         $this->validate($request, [
-            'interest'  => 'required',
+            'title'  => 'required',
         ]);
 
         $data = Interest::findOrfail($interest_id);
 
-        $data->interest = $request->input('interest');
+        $data->title = $request->input('title');
         $data->save();
         return response()->json(['data' =>['success' => true, 'messsage' => 'Interest Updated']], 200);
     }
 
 
-    public function destroy(Request $request, $interest_id) {
+    public function destroy($interest_id) {
 
         $data = Interest::findOrfail($interest_id);
         $data->delete();

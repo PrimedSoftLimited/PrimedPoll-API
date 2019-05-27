@@ -40,8 +40,7 @@
 ---
 
 ### Francis
-
-Admin Delete User - https://documenter.getpostman.com/view/6899786/S1TN72EW
+(https://documenter.getpostman.com/view/6899786/S1TN72EW)
 
 **user**
 - [x] *user complete registration*
@@ -51,7 +50,19 @@ Admin Delete User - https://documenter.getpostman.com/view/6899786/S1TN72EW
 
 ---
 
-Signin Documentation - https://documenter.getpostman.com/view/6843654/S1ENyJhJ
+### Okechukwu
+(https://documenter.getpostman.com/view/6843654/S1ENyJhJ)
+**user**
+- [x] *user login*
+- [x] *feeds*
+
+**admin**
+- [x] *admin login*
+- [x] *admin password update*
+- [x] *admin profile*
 
 
-Forgotpassword & Create Poll Documentation https://documenter.getpostman.com/view/6839814/S1EMWfoB
+### Tino
+(https://documenter.getpostman.com/view/6839814/S1EMWfoB)
+**user**
+- [x] *forgotten password*

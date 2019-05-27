@@ -16,17 +16,19 @@ class UserCompleteRegistrationController extends Controller
      * @return void
      */
 
-    public function update(User $user, Request $request)
+    public function update(Request $request)
     {
         $user = Auth::guard('api')->user();
 
         $this->validateRequest($request);
 
+        $default_image = 'https://res.cloudinary.com/iro/image/upload/v1552487696/Backtick/noimage.png';
+
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
         $user->dob = $request->input('dob');
-        $user->image = 'user.jpg';
+        $user->image = $default_image;
 
         $items = $request->input('interests');
         
