@@ -22,8 +22,10 @@ class UserPollController extends Controller
     public function index()
     {
         $poll = Poll::where('owner_id', Auth::user()->id)
-                ->with('options')
                 ->withCount('votes')
+                ->with(['options' => function($query){
+                    $query->withCount('votes');
+                 }])
                 ->get();
         return response()->json($poll, 200);
     }
@@ -31,12 +33,13 @@ class UserPollController extends Controller
     public function show($id)
     {   
         $pollCheck = Poll::findOrFail($id);
-
         if(Auth::user()->id == $pollCheck->owner_id)
             {
                 $poll = Poll::where('id', $id)
-                    ->with('options')
                     ->withCount('votes')
+                    ->with(['options' => function($query){
+                        $query->withCount('votes');
+                     }])
                     ->get();
                 return response()->json($poll, 200);
             }
@@ -46,19 +49,20 @@ class UserPollController extends Controller
     public function create(Request $request, $id)
     {
         $user = Auth::user();
-        $interest = Userinterest::where('owner_id', $user->id)->where('interest_id', $id)->first();
+        
+        $interest = $user->interest()->where('interest_id', $id)->first();
 
         if($interest)
         {
             // return $request;
             $this->validatePoll($request);
             $poll = new Poll;
-            if(!Poll::where('question', $request->input('question'))->where('interest_id', $interest->interest_id)->exists())
+            if(!Poll::where('question', $request->input('question'))->where('interest_id', $id)->exists())
                 {
                     $poll->question = $request->input('question');
                     $poll->startdate = $request->input('startdate');
                     $poll->expirydate = $request->input('expirydate');
-                    $poll->interest_id = $interest->interest_id;
+                    $poll->interest_id = $interest->id;
                     $poll->owner_id = Auth::user()->id;
                     $poll->save();
                     
@@ -71,13 +75,13 @@ class UserPollController extends Controller
                         $option->poll_id = $poll->id;
                         $option->save();
                     }
-
                     $res['status'] = "{$poll->question} Created Successfully!";
                     $res['poll'] = $poll;
                     $res['options'] = Option::where('poll_id', $poll->id)->get();
                     return response()->json($res, 201);
-                
+
                  } return response()->json('Poll exist for Interest', 422);
+
             } return response()->json('Please Select Interest Before Creating Poll', 422);
     }
 

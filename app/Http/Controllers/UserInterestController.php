@@ -25,12 +25,12 @@ class UserInterestController extends Controller
         $interest = $user->interest()->get();
 
         return response()->json($interest, 200);
-
     }
 
     public function show($id)
     {   
         $user = Auth::user();
+
         $interest = $user->interest()->where('interest_id', $id)->first();
 
         if($interest)
@@ -59,7 +59,6 @@ class UserInterestController extends Controller
             } return response()->json('Interest Does not Exist', 404);
         
     }
-
      
     public function destroy(Request $request, $id)
     {
