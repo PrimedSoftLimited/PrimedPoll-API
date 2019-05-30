@@ -20,7 +20,9 @@ class UserInterestController extends Controller
     
     public function index()
     {
-        $interest = Userinterest::where('owner_id', Auth::user()->id)->with('interest')->get();
+        $user = Auth::user();
+
+        $interest = $user->interest()->get();
 
         return response()->json($interest, 200);
 

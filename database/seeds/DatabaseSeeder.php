@@ -64,16 +64,16 @@ class DatabaseSeeder extends Seeder
                     ]);
                }
 
-             $faker = Faker::create();
-              $owner_id = DB::table('users')->pluck('id');
-              $polled_id = DB::table('polls')->pluck('id');
-               foreach (range(1,50) as $index){
-                    \App\Option::create([
-                        'option' => $faker->sentence,
-                        'poll_id' => $faker->randomElement($polled_id),
-                        'owner_id' => $faker->randomElement($owner_id)
-                    ]);
-               }
+            //  $faker = Faker::create();
+            //   $owner_id = DB::table('users')->pluck('id');
+            //   $polled_id = DB::table('polls')->pluck('id');
+            //    foreach (range(1,50) as $index){
+            //         \App\Option::create([
+            //             'option' => $faker->sentence,
+            //             'poll_id' => $faker->randomElement($polled_id),
+            //             'owner_id' => $faker->randomElement($owner_id)
+            //         ]);
+            //    }
 
         }
 

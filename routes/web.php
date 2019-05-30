@@ -74,7 +74,14 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
     //************************************** */
    
     //for users******************************Jeremiahiro******************************start/
+
+    // edit users profile
     $router->put('/edit', 'UserProfileController@editprofile');
+
+    // change users password
+    $router->patch('/password', 'UserProfileController@updatePassword');
+
+    // upload profile picture
     $router->post('/upload', 'UserProfileController@uploadImage');
 
 
@@ -89,7 +96,7 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
 
             // a user can create poll/options under an interest
-            $router->post('/{userinterest_id}/poll', 'UserPollController@create');
+            $router->post('/{interest_id}/poll', 'UserPollController@create');
 
             // a user can delete a poll he created
             $router->delete('/poll/{id}', 'UserPollController@destroy');
