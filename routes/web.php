@@ -102,8 +102,8 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
 
 
-                    // show all interest that user subscribed to
-                    $router->get('/user/interest/', 'UserInterestController@index');
+            // show all interest that user subscribed to
+            $router->get('/user/interest/', 'UserInterestController@index');
 
                     // show a single interest that user subscribed to
                     $router->get('/user/{interest_id}', 'UserInterestController@show');
@@ -113,15 +113,15 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
 
 
 
-                            // show single options of a poll and their vote count
-                            $router->get('/{option_id}/option', 'UserOptionsController@show');
+            // show single options of a poll and their vote count
+            $router->get('/{option_id}/option', 'UserOptionsController@show');
 
-                            // delete single option of a poll
-                            $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
+            // delete single option of a poll
+            $router->delete('/{option_id}/option', 'UserOptionsController@destroy');
 
 
-                                    // a user can vote
-                                    $router->post('/{poll_id}/vote', 'UserVotesController@create');
+            // a user can vote
+            $router->post('/{poll_id}/vote', 'UserVotesController@create');
 
     //for users******************************Jeremiahiro******************************end here/
 
