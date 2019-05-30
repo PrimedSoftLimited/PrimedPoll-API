@@ -107,10 +107,10 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() use (
                     $router->get('/user/interest/', 'UserInterestController@index');
 
                     // show a single interest that user subscribed to
-                    $router->get('/user/interest/{id}', 'UserInterestController@show');
+                    $router->get('/user/{interest_id}', 'UserInterestController@show');
 
                     // a user can deselect an interest
-                    $router->delete('/user/interest/{id}', 'UserInterestController@destroy');
+                    $router->delete('/user/{interest_id}', 'UserInterestController@destroy');
 
 
 
