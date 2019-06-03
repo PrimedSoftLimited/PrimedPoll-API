@@ -30,17 +30,20 @@ class VerifyUserController extends Controller
 
         $user = User::where('verifycode', $verifycode)->first();
 
+        $token = Auth::guard($api)->login($user);
+        
             if ($user->email_verified_at == null){
                 $user->email_verified_at = date("Y-m-d H:i:s");
                 $user->save();
                 
-                $msg["success"] = "Account is verified. You can now login.";
-                $msg['verified'] = True;
+                $msg["message"] = "Account is verified. You can now login.";
+                $msg['verified'] = "True";
+                $msg['token'] = $token;
                 return response()->json($msg, 200);
-
+                
             } else {
-                $msg["status"] = "Account verified already. Please Login";
-                $msg['verified'] = True;
+                $msg["message"] = "Account verified already. Please Login";
+                $msg['verified'] = "Done";
 
                 return response()->json($msg, 200);
              }

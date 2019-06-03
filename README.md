@@ -12,8 +12,9 @@
 **user**
 - [x] *signup*
 - [x] *verify account*
-- [x] *upload image*
-- [x] *edit profile*
+- [x] *upload profile picturee*
+- [x] *edit users profile*
+- [x] *change users password*
 
 - [x] *show all existing interest as created by admin and their polls as created by users*
 - [x] *show all interest that user subscribed to*
